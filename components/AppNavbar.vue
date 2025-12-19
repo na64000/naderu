@@ -45,7 +45,9 @@ const isMenuOpen = ref(false);
       </button>
 
       <!-- Menu -->
-      <div class="hidden md:flex space-x-6 items-center text-violet-200">
+      <div
+        class="hidden md:flex space-x-6 items-center text-violet-200 font-bold"
+      >
         <NuxtLink to="/" class="hover:text-white transition">Beranda</NuxtLink>
         <NuxtLink to="/katalog" class="hover:text-white transition"
           >Semua Produk</NuxtLink

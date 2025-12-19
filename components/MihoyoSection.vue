@@ -1,71 +1,53 @@
 <script setup lang="ts">
-import holojplogo from "./assets/hololive/section/tab/top_logo_hololive.svg";
-import holoenlogo from "./assets/hololive/section/tab/top_logo_hololive_en.svg";
-import holoidlogo from "./assets/hololive/section/tab/top_logo_hololive_id.svg";
-import devislogo from "./assets/hololive/section/tab/top_logo_devis.svg";
+import gilogo from "./assets/mihoyo/section/tab/gilogo.webp";
+import hsrlogo from "./assets/mihoyo/section/tab/hsrlogo.webp";
+import zzzlogo from "./assets/mihoyo/section/tab/zzzlogo.webp";
+import enfield from "./assets/mihoyo/section/tab/enfield.webp";
+import arknightslogo from "./assets/mihoyo/section/tab/ak.webp";
 
 const { products } = useProducts();
 
 const activeBranch = ref("");
-const activeGen = ref("");
 const visibleCount = ref(12);
 
 const branches = [
   {
-    name: "Hololive JP",
-    logo: holojplogo,
-    generations: [
-      "Gen 0",
-      "Gen 1",
-      "Gen 2",
-      "Gen 3",
-      "Gen 4",
-      "Gen 5",
-      "holoX",
-      "GLOW",
-      "Gamers",
-    ],
+    name: "Genshin Impact",
+    logo: gilogo,
   },
   {
-    name: "Hololive EN",
-    logo: holoenlogo,
-    generations: ["Myth", "Hope", "Council", "Promise", "Advent", "Justice"],
+    name: "Honkai Star Rail",
+    logo: hsrlogo,
   },
   {
-    name: "Hololive ID",
-    logo: holoidlogo,
-    generations: ["Gen 1", "Gen 2", "Gen 3"],
+    name: "Zenless Zone Zero",
+    logo: zzzlogo,
   },
   {
-    name: "DEV_IS",
-    logo: devislogo,
-    generations: ["ReGLOSS", "FLOW GLOW"],
+    name: "Enfield",
+    logo: enfield,
+  },
+  {
+    name: "Arknights",
+    logo: arknightslogo,
   },
 ];
 
-const currentGenerations = computed(() => {
-  return branches.find((b) => b.name === activeBranch.value)?.generations || [];
-});
-
 watch(activeBranch, (newVal) => {
-  const branch = branches.find((b) => b.name === newVal);
-  if (branch && branch.generations.length > 0) {
-    activeGen.value = branch.generations[0];
-  }
-  // Reset visible count saat tab berubah
   visibleCount.value = 12;
 });
 
 const filteredProducts = computed(() => {
-  // Filter produk Hololive
+  const mihoyoFandoms = [
+    "Genshin Impact",
+    "Honkai Star Rail",
+    "Zenless Zone Zero",
+  ];
   return products.value.filter((p) => {
-    const isHololive = p.fandom.toLowerCase() === "hololive";
-    const matchBranch = activeBranch.value
-      ? p.branch === activeBranch.value
-      : true;
-    const matchGen = activeGen.value ? p.generation === activeGen.value : true;
-
-    return isHololive && matchBranch && matchGen;
+    if (activeBranch.value) {
+      return p.fandom === activeBranch.value;
+    }
+    return mihoyoFandoms.includes(p.fandom);
   });
 });
 
@@ -83,7 +65,9 @@ const loadMore = () => {
 
 const handleRequest = () =>
   window.open(
-    `https://wa.me/6281234567890?text=Halo, saya ingin request item untuk ${activeBranch.value} - ${activeGen.value}`,
+    `https://wa.me/6281234567890?text=Halo, saya ingin request item untuk ${
+      activeBranch.value || "Hoyoverse"
+    }`,
     "_blank"
   );
 const handleCustom = () =>
@@ -102,13 +86,11 @@ const handleCustom = () =>
       <h2
         class="text-2xl font-bold text-violet-700 mb-6 border-l-4 border-violet-400 pl-3"
       >
-        Koleksi Hololive
+        Koleksi Game Favorit
       </h2>
 
       <!-- Main Tabs (Branches) -->
-      <div
-        class="grid grid-cols-2 md:grid-cols-4 gap-4 border-b border-violet-300 pb-6"
-      >
+      <div class="grid grid-cols-3 md:grid-cols-6 gap-4">
         <button
           v-for="branch in branches"
           :key="branch.name"
@@ -123,26 +105,9 @@ const handleCustom = () =>
           <img
             :src="branch.logo"
             :alt="branch.name"
-            class="w-full max-h-12 object-contain p-2"
+            class="w-full max-h-24 object-contain p-1 rounded-lg"
           />
           <!--<span>{{ branch.name }}</span>-->
-        </button>
-      </div>
-
-      <!-- Sub Tabs (Generations) -->
-      <div class="flex flex-wrap gap-2 mt-6">
-        <button
-          v-for="gen in currentGenerations"
-          :key="gen"
-          @click="activeGen = gen"
-          :class="[
-            'px-4 py-1.5 text-sm rounded-full transition-colors border',
-            activeGen === gen
-              ? 'bg-white border-white border text-violet-800 font-medium shadow-lg transform scale-105'
-              : 'bg-white text-violet-500 hover:text-violet-500 hover:bg-violet-200 hover:border-violet-500',
-          ]"
-        >
-          {{ gen }}
         </button>
       </div>
     </div>
@@ -161,7 +126,7 @@ const handleCustom = () =>
       </div>
       <div v-else class="text-center py-12 text-violet-400">
         <p class="text-md md:text-lg font-medium">
-          Belum ada produk untuk {{ activeBranch }} - {{ activeGen }}
+          Belum ada produk untuk {{ activeBranch }}
         </p>
         <div class="flex justify-center gap-4 mt-6">
           <button

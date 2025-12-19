@@ -1,4 +1,7 @@
 <script setup lang="ts">
+const { order } = useOrder();
+const router = useRouter();
+
 const props = defineProps<{
   isOpen: boolean;
   product: any;
@@ -13,36 +16,7 @@ const clothingSizes = ["S", "M", "L", "XL", "XXL", "3XL", "4XL", "5XL"];
 const selectedThickness = ref("Reguler 3mm");
 const selectedSize = ref("90x40");
 const selectedClothingSize = ref("L");
-
-// Buyer Data
-const buyer = reactive({
-  name: "",
-  whatsapp: "",
-  quantity: 1,
-  province: "",
-  city: "",
-  district: "",
-  postalCode: "",
-  address: "",
-});
-
-// Dummy Location Data
-const provinces = ["Jawa Barat", "DKI Jakarta", "Jawa Tengah"];
-const cities = computed(() => {
-  if (buyer.province === "Jawa Barat") return ["Bandung", "Bekasi", "Depok"];
-  if (buyer.province === "DKI Jakarta")
-    return ["Jakarta Selatan", "Jakarta Pusat", "Jakarta Barat"];
-  if (buyer.province === "Jawa Tengah") return ["Semarang", "Solo", "Magelang"];
-  return [];
-});
-const districts = computed(() => {
-  if (buyer.city === "Bandung") return ["Coblong", "Cicendo", "Sukajadi"];
-  if (buyer.city === "Jakarta Selatan")
-    return ["Tebet", "Setiabudi", "Pasar Minggu"];
-  if (buyer.city === "Semarang")
-    return ["Banyumanik", "Tembalang", "Candisari"];
-  return ["Kecamatan A", "Kecamatan B"]; // Fallback
-});
+const quantity = ref(1);
 
 // Reset selection when modal opens
 watch(
@@ -52,6 +26,7 @@ watch(
       // Reset options
       selectedThickness.value = "Reguler 3mm";
       selectedSize.value = "90x40";
+      quantity.value = 1;
     }
   }
 );
@@ -89,49 +64,20 @@ const isOutOfStock = computed(() => {
   return !props.product.variants[key];
 });
 
-const constructMessage = () => {
-  const category = props.product.category || "Mousepad";
-  let specs = "";
+const proceedToCheckout = () => {
+  order.value.product = props.product;
+  order.value.quantity = quantity.value;
 
-  if (category === "Mousepad") {
-    specs = `- Ketebalan: ${selectedThickness.value}\n- Ukuran: ${selectedSize.value} cm`;
-  } else if (["T-Shirt", "Hoodie", "Jaket"].includes(category)) {
-    specs = `- Ukuran: ${selectedClothingSize.value}`;
-  } else {
-    specs = "-";
+  if (props.product.category === "Mousepad" || !props.product.category) {
+    order.value.variant = selectedThickness.value;
+    order.value.size = selectedSize.value;
+  } else if (["T-Shirt", "Hoodie", "Jaket"].includes(props.product.category)) {
+    order.value.size = selectedClothingSize.value;
+    order.value.variant = "";
   }
 
-  return `Halo, saya ingin memesan ${props.product.name}.
-
-Data Pemesan:
-- Nama: ${buyer.name}
-- WhatsApp: ${buyer.whatsapp}
-- Alamat: ${buyer.address}, ${buyer.district}, ${buyer.city}, ${buyer.province}, ${buyer.postalCode}
-
-Detail Pesanan:
-- Jumlah: ${buyer.quantity}
-Spesifikasi:
-${specs}`;
-};
-
-const handleOrder = () => {
-  window.open(
-    `https://wa.me/6281234567890?text=${encodeURIComponent(
-      constructMessage()
-    )}`,
-    "_blank"
-  );
   emit("close");
-};
-
-const handleFacebookOrder = () => {
-  window.open(
-    `https://www.facebook.com/messages/t/naderustore?text=${encodeURIComponent(
-      constructMessage()
-    )}`,
-    "_blank"
-  );
-  emit("close");
+  router.push("/checkout");
 };
 </script>
 
@@ -258,106 +204,18 @@ const handleFacebookOrder = () => {
           </div>
         </div>
 
-        <!-- Buyer Details Form -->
+        <!-- Quantity -->
         <div class="border-t border-zinc-800 pt-6 space-y-4">
-          <h4 class="text-lg font-bold text-violet-100">Data Pemesan</h4>
-
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label class="block text-xs text-violet-300 mb-1"
-                >Nama Lengkap</label
-              >
-              <input
-                v-model="buyer.name"
-                class="w-full bg-zinc-800 border border-zinc-700 rounded p-2 text-white focus:border-violet-500 outline-none"
-                placeholder="Nama Anda"
-              />
-            </div>
-            <div>
-              <label class="block text-xs text-violet-300 mb-1"
-                >Nomor WhatsApp</label
-              >
-              <input
-                v-model="buyer.whatsapp"
-                class="w-full bg-zinc-800 border border-zinc-700 rounded p-2 text-white focus:border-violet-500 outline-none"
-                placeholder="0812..."
-              />
-            </div>
-          </div>
-
           <div>
             <label class="block text-xs text-violet-300 mb-1"
               >Jumlah Pembelian</label
             >
             <input
               type="number"
-              v-model="buyer.quantity"
+              v-model="quantity"
               min="1"
               class="w-24 bg-zinc-800 border border-zinc-700 rounded p-2 text-white focus:border-violet-500 outline-none"
             />
-          </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label class="block text-xs text-violet-300 mb-1">Provinsi</label>
-              <select
-                v-model="buyer.province"
-                class="w-full bg-zinc-800 border border-zinc-700 rounded p-2 text-white focus:border-violet-500 outline-none"
-              >
-                <option value="" disabled>Pilih Provinsi</option>
-                <option v-for="p in provinces" :key="p" :value="p">
-                  {{ p }}
-                </option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-xs text-violet-300 mb-1"
-                >Kabupaten/Kota</label
-              >
-              <select
-                v-model="buyer.city"
-                :disabled="!buyer.province"
-                class="w-full bg-zinc-800 border border-zinc-700 rounded p-2 text-white focus:border-violet-500 outline-none disabled:opacity-50"
-              >
-                <option value="" disabled>Pilih Kota</option>
-                <option v-for="c in cities" :key="c" :value="c">{{ c }}</option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-xs text-violet-300 mb-1"
-                >Kecamatan</label
-              >
-              <select
-                v-model="buyer.district"
-                :disabled="!buyer.city"
-                class="w-full bg-zinc-800 border border-zinc-700 rounded p-2 text-white focus:border-violet-500 outline-none disabled:opacity-50"
-              >
-                <option value="" disabled>Pilih Kecamatan</option>
-                <option v-for="d in districts" :key="d" :value="d">
-                  {{ d }}
-                </option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-xs text-violet-300 mb-1">Kode Pos</label>
-              <input
-                v-model="buyer.postalCode"
-                class="w-full bg-zinc-800 border border-zinc-700 rounded p-2 text-white focus:border-violet-500 outline-none"
-                placeholder="12345"
-              />
-            </div>
-          </div>
-
-          <div>
-            <label class="block text-xs text-violet-300 mb-1"
-              >Alamat Lengkap</label
-            >
-            <textarea
-              v-model="buyer.address"
-              rows="3"
-              class="w-full bg-zinc-800 border border-zinc-700 rounded p-2 text-white focus:border-violet-500 outline-none"
-              placeholder="Nama Jalan, No. Rumah, RT/RW, Patokan"
-            ></textarea>
           </div>
         </div>
 
@@ -373,18 +231,11 @@ const handleFacebookOrder = () => {
       <!-- Footer -->
       <div class="p-4 border-t border-zinc-800 flex flex-col gap-3">
         <button
-          @click="handleOrder"
+          @click="proceedToCheckout"
           :disabled="isOutOfStock"
           class="w-full py-3 bg-violet-600 hover:bg-violet-500 disabled:bg-zinc-700 disabled:cursor-not-allowed text-white font-bold rounded-lg transition"
         >
-          {{ isOutOfStock ? "Stok Habis" : "Lanjut ke WhatsApp" }}
-        </button>
-        <button
-          @click="handleFacebookOrder"
-          :disabled="isOutOfStock"
-          class="w-full py-3 bg-blue-600 hover:bg-blue-500 disabled:bg-zinc-700 disabled:cursor-not-allowed text-white font-bold rounded-lg transition"
-        >
-          {{ isOutOfStock ? "Stok Habis" : "Order via Facebook" }}
+          {{ isOutOfStock ? "Stok Habis" : "Lanjut ke Checkout" }}
         </button>
       </div>
     </div>
