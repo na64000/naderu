@@ -42,10 +42,8 @@ const fandoms = [
         </div>
       </div>
     </div>
-
-    <!-- Hero Section: Fandom Grid -->
+    <!-- hide 
     <div class="mb-12">
-      <!-- Mobile: Horizontal Scroll, Desktop: Grid 6 cols -->
       <div
         class="flex overflow-x-auto md:grid md:grid-cols-6 gap-4 pb-4 md:pb-0 px-2 scrollbar-hide"
       >
@@ -69,7 +67,7 @@ const fandoms = [
           >
         </div>
       </div>
-    </div>
+    </div> -->
 
     <!-- CTA Section -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-12">

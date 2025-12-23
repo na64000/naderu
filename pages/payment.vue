@@ -67,7 +67,7 @@ const openEmail = () => window.open("mailto:naderu@example.com", "_blank");
     <!-- QRIS View -->
     <div
       v-else-if="order.paymentMethod === 'qris'"
-      class="bg-white p-8 rounded-xl border border-violet-200 text-center max-w-xl mx-auto"
+      class="bg-white p-8 rounded-xl border border-violet-200 shadow-lg text-center max-w-xl mx-auto"
     >
       <div class="mb-6">
         <svg
@@ -84,7 +84,7 @@ const openEmail = () => window.open("mailto:naderu@example.com", "_blank");
           ></path>
         </svg>
         <h3 class="text-xl font-bold text-zinc-600 mb-2">Pembayaran QRIS</h3>
-        <p class="text-violet-200">
+        <p class="text-zinc-500">
           Kamu akan melakukan pembayaran QRIS, akan tersedia form baru untuk
           mengisi nama, no telp, email. Jika kamu sudah siap melakukan
           pembayaran, silahkan klik tombol dibawah untuk melanjutkan pembayaran.
@@ -92,7 +92,7 @@ const openEmail = () => window.open("mailto:naderu@example.com", "_blank");
       </div>
       <button
         @click="finishPayment"
-        class="w-full py-3 bg-violet-600 hover:bg-violet-500 text-zinc-600 font-bold rounded-lg transition"
+        class="w-full py-3 bg-violet-600 hover:bg-violet-500 text-violet-100 font-bold rounded-lg transition"
       >
         Selesaikan Pembayaran
       </button>
