@@ -1,75 +1,154 @@
-# Nuxt Minimal Starter
+<div align="center">
+  <img src="https://socialify.git.ci/na64000/naderu/image?custom_language=JavaScript&description=1&font=Rokkitt&language=1&name=1&owner=1&theme=Dark" alt="Naderu Store Banner" />
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+  <br />
+  <br />
 
-## Setup
+  <h1>Naderu Store</h1>
 
-Make sure to install dependencies:
+  <p>
+    <strong>A high-performance modern e-commerce storefront built with Nuxt 4 and Tailwind CSS.</strong>
+  </p>
+
+  <p>
+    <a href="https://nuxt.com"><img src="https://img.shields.io/badge/Nuxt-4.2.2-00C58E?style=for-the-badge&logo=nuxt.js&logoColor=white" alt="Nuxt 4" /></a>
+    <a href="https://vuejs.org/"><img src="https://img.shields.io/badge/Vue.js-3.5-4FC08D?style=for-the-badge&logo=vuedotjs&logoColor=white" alt="Vue 3" /></a>
+    <a href="https://tailwindcss.com/"><img src="https://img.shields.io/badge/Tailwind_CSS-3.4-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind CSS" /></a>
+  </p>
+</div>
+
+---
+
+## 🚀 Overview
+
+**Naderu Store** is an ultra-fast, modern e-commerce frontend application. Designed to provide a seamless shopping experience, the platform utilizes **Nuxt 4** for powerful Server-Side Rendering (SSR) and routing, while **Tailwind CSS** ensures an elegant, responsive, and highly customizable UI design.
+
+### ✨ Key Features
+
+- **⚡ Blazing Fast Performance:** Leverages Nuxt architecture for lightning-fast page loads and optimized rendering.
+- **🎨 Premium Custom UI:** Utility-first styling with Tailwind CSS tailored for an intuitive e-commerce experience.
+- **🧩 Reusable Architecture:** A clean Vue 3 component-based structure optimized for maintainability and scale.
+- **🛠️ Automated Routing:** Seamless file-system-based routing with Nuxt.
+- **💼 Modular Composables:** Reusable stateful logic organized efficiently within the composables directory.
+
+---
+
+## 📸 Screenshots
+
+_(Replace the URLs below with the actual paths to your hosted images)_
+
+|                                                       Storefront                                                        |                                                      Product Details                                                      |
+| :---------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------: |
+| <img src="https://placehold.co/600x400/111111/f44f44?text=Storefront+Preview" alt="Storefront Screenshot" width="100%"> | <img src="https://placehold.co/600x400/111111/f44f44?text=Product+Details" alt="Product Details Screenshot" width="100%"> |
+
+---
+
+## 🛠️ Technology Stack
+
+| Category             | Technology          | Description                      |
+| -------------------- | ------------------- | -------------------------------- |
+| **Core Framework**   | Nuxt `v4.2.2`       | The intuitive Vue Framework      |
+| **Styling Engine**   | Tailwind CSS `v3.x` | Utility-first CSS framework      |
+| **Component Engine** | Vue `v3.5`          | Progressive JavaScript Framework |
+| **Routing**          | Vue Router `v4`     | Official router for Vue.js       |
+
+---
+
+## 🎨 Design Language
+
+Building upon a sleek, user-centric visual identity, the overall aesthetic incorporates tailored Tailwind presets specifically built for e-commerce, ensuring visual consistency across all components and pages.
+
+---
+
+## ⚙️ Getting Started
+
+Follow these steps to set up the project locally.
+
+### Prerequisites
+
+- **Node.js**: `v18.x` or higher recommended.
+- **npm** (or your preferred package manager like yarn/pnpm).
+
+### Installation
+
+1. **Clone the repository:**
+
+   ```bash
+   git clone https://github.com/na64000/naderu.git
+   cd naderu
+   ```
+
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+
+### Development Server
+
+Start the Nuxt development server at `http://localhost:3000`:
 
 ```bash
-# npm
-npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
-```
-
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
 npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
 ```
 
-## Production
+### Production Build
 
-Build the application for production:
+Build the project for production deployment:
 
 ```bash
-# npm
 npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
 ```
 
-Locally preview production build:
+And start the production server:
 
 ```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
+npm run start
 ```
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+Or statically generate your site:
+
+```bash
+npm run generate
+```
+
+---
+
+## 📂 Project Architecture
+
+```text
+naderu_store/
+├── .nuxt/              # Auto-generated by Nuxt (Do not edit)
+├── assets/             # Uncompiled CSS/Sass, images, and fonts
+├── components/         # Auto-imported custom Vue components
+├── composables/        # Reusable stateful functions and APIs
+├── layouts/            # E-commerce application layouts
+├── pages/              # File-system based routing views
+├── public/             # Static root-level files
+├── utils/              # Helper functions and logic blocks
+├── nuxt.config.ts      # Main Nuxt configuration file
+└── package.json        # Project metadata and dependencies
+```
+
+---
+
+## 🤝 Contributing
+
+We welcome community contributions!
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/NewFeature`)
+3. Commit your Changes (`git commit -m 'Add some NewFeature'`)
+4. Push to the Branch (`git push origin feature/NewFeature`)
+5. Open a Pull Request
+
+---
+
+## 📄 License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
+---
+
+<p align="center">
+  Built with ❤️ by <strong>na64000</strong>
+</p>
