@@ -35,8 +35,6 @@
 
 ## 📸 Screenshots
 
-_(Replace the URLs below with the actual paths to your hosted images)_
-
 |                                                       Storefront                                                        |                                                      Product Details                                                      |
 | :---------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------: |
 | <img src="https://placehold.co/600x400/111111/f44f44?text=Storefront+Preview" alt="Storefront Screenshot" width="100%"> | <img src="https://placehold.co/600x400/111111/f44f44?text=Product+Details" alt="Product Details Screenshot" width="100%"> |
